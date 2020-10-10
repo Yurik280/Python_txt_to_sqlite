@@ -1,6 +1,8 @@
 """
 Módulo de filtros para acondicionar los datos para cargar la base de datos de personas en formato [Nombre,Apellido,Año,Mes,Día]
 """
+from os import system
+system("cls")
 
 def filter_final(s):
     """
@@ -37,13 +39,18 @@ def empty_lines_filter(list):
     Recibe una lista de listas, elimina todas las listas internas que tienen sólo elementos vacíos
     :return: Retorna la lista liberada del contenido sin sentido
     """
-    for line in list:             
-        counter = 0
-        for item in line:
+    empty_lines_list = []
+    for i in range(len(list)):             
+        counter = 0        
+        for item in list[i]:
             if len(item) == 0:
                 counter += 1 # cuenta la cantidad de elementos vacíos
-        if len(line) == counter: # si todos son vacíos
-            list.remove(line) # elimina todo el bloque
+        if len(list[i]) == counter: # si todos son vacíos
+            empty_lines_list.append(i)
+    if len(empty_lines_list) > 0:
+        for i in range(len(list)-1,-1,-1):
+            if i in empty_lines_list:
+                list.remove(list[i]) # elimina todo el bloque
     return list 
 
 
@@ -53,11 +60,11 @@ def date_num_filter(list):
     :return: Retorna la lista comprobada o la lista vacía y declara un error
     """
     for line in list:
-        if len(line) != 5: # si todos los bloques contienenen 5 elementos
+        if len(line) != 5: # si todos los bloques contienenen no 5 elementos
             print("Error del archivo")
             return [] 
-        if not(line[2].isnumeric() and line[3].isnumeric() and line[4].isnumeric()):
-            print("Error del archivo") # si los tres últomos elementos de cada bloque contienen solo números
+        elif not(line[2].isnumeric() and line[3].isnumeric() and line[4].isnumeric()):
+            print("Error del archivo") # si los tres últomos elementos de cada bloque contienen no sólo números
             return [] 
         else:
             continue

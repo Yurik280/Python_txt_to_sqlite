@@ -1,7 +1,7 @@
 """  
     Yury Panov
-    09-oct-2020
-    Versión 2
+    10-oct-2020
+    Versión 3
 """
 
 import sqlite3
