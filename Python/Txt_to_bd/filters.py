@@ -71,7 +71,7 @@ def date_num_filter(list):
     return list
 
 
-def list_filers(list): 
+def list_filters(list): 
     """
     Recibe una lista de listas, analiza los posibles errores, unos arregla, otros declara
     :return: Retorna la lista comprobada o la lista vacía y declara un error
@@ -85,3 +85,4 @@ def list_filers(list):
     list = date_num_filter(list)
     print(list)
     return list
+

@@ -1,14 +1,14 @@
 """  
     Yury Panov
-    10-oct-2020
-    Versión 3
+    13-oct-2020
+    Versión 4
 """
 
 import sqlite3
 import codecs # para tratar archivos con símbolos especiales de UTF-8
 from os import system
 
-from filters import list_filers # módulo de filtros para acondicionar los datos del archivo original
+from filters import list_filters # módulo de filtros para acondicionar los datos del archivo original
 
 system("cls")
 
@@ -25,8 +25,9 @@ def main():
 
 def extract_data(fileName):
     """  
-    recibe el nombre del archivo de texo con datos en formato:
-    Nombre,Apellido,Año,Mes,Día, separados con "\n"
+    Extracta datos de un archivo de texto y genera una lista de datos
+    :param fileName: el nombre del archivo de texo con datos en formato:
+    Apellido,Nombre,Año,Mes,Día, separados con "\n"
     :return: retorna una lista de listas con strings de datos
     """
     try:        
@@ -43,24 +44,27 @@ def extract_data(fileName):
     except:
         print("No se puede encontrar el archivo")
         return []
-    newDataList = list_filers(newDataList) # filtra posibles fallas del archivo original
+    newDataList = list_filters(newDataList) # filtra posibles fallas del archivo original
     return newDataList
 
 
 def charge_db(dataList, dbName):
     """
-    Recibe una lista de listas con strings de datos y el nombre de la base de datos
-    en formato: [Nombre,Apellido,Año,Mes,Día]
     Crea una base de datos con el nombre indicado y carga los datos 
+    :param dataList: una lista de listas con strings de datos 
+    :param dbName: el nombre de la base de datos
+    en formato: [Apellido,Nombre,Año,Mes,Día]
+    :return:
     """
     if dataList == []:
         print("Error de la fuente de datos")
         return
     con = sqlite3.connect(dbName) # conexión
     cursor = con.cursor() # cursor
-    cursor.execute("""CREATE TABLE IF NOT EXISTS PERSONAS ( 
-        Nombre text, 
+    cursor.execute("""CREATE TABLE IF NOT EXISTS 
+        PERSONAS (         
         Apellido text, 
+        Nombre text, 
         Year integer,
         Month integer,
         Day integer	
